@@ -1,31 +1,71 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+body{
+  padding: 0;
+  margin: 0;
+  background: #F4F4F4;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+h1, h2, h3, h4, p, span, a, li, input, button{
+  font-family: "Montserrat" !important;
+}
+
+.upload-form {
+  width: 60%;
+  margin: 0px auto;
+  padding: 20px;
+  background: #FFFFFF;
+  
+  
+}
+
+.upload-form form{
+  display: flex;
+  grid-gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.navbar{
+  width: 60%;
+  margin: auto;
+  margin-top: 6%;
+  padding: 20px;
+  background: #292929;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
+}
+
+.navbar a{
+  text-decoration: none;
+  color: #ffffff;
+  margin-right: 20px;
+}
+
+.upload-form form div{
+  
+  flex-basis: 70%;
+
+}
+
+.upload-form input{
+  padding: 16px;
+  border: 2px solid #CCCCCC;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.upload-form button{
+  background: #0099dd;
+  flex-basis: 24%;
+  padding: 20px;
+  border: none;
+  border-radius: 8px;
+  color: #FFFFFF;
 }
 
 @keyframes App-logo-spin {
