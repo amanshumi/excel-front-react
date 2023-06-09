@@ -121,7 +121,7 @@ const Upload = () => {
                 <button className="button-form" type="submit">upload</button>
             </form>
             <div>
-                {rows !== undefined && rows.length > 0 && <DataGrid rows={rows} columns={headers} />}
+                {rows !== undefined && rows.length > 0 && <DataGrid style={{fontFamily: "Montserrat"}} rows={rows} columns={headers} />}
             </div>
         </div>
     );
