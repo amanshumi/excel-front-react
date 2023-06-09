@@ -1,5 +1,5 @@
 <img src="screenshot-excel.png" alt="Screenshot"/>
-<img src="excel-new.png" alt="Screenshot"/>
+<img src="excel-new.PNG" alt="Screenshot"/>
 
 # Getting Started with Create React App
 
