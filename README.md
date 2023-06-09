@@ -1,4 +1,4 @@
-[!alt tag] https://github.com/github/excel-front-react/screenshot-excel.png
+<img src="screenshot-excel.png" alt="Screenshot"/>
 
 # Getting Started with Create React App
 
