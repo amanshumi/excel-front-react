@@ -1,24 +1,41 @@
 import React, { useEffect, useCallback, useState } from "react"
 
-import { DataGrid, GridRowsProp, GridColDef, GridRowModel, GridRowParams, MuiEvent, GridEventListener, GridRowId, GridRowModes, GridRowModesModel, GridToolbarContainer, GridAddIcon } from '@mui/x-data-grid';
+import { DataGrid, GridRowsProp, GridColDef, GridRowModel, GridRowParams, MuiEvent, GridEventListener, GridRowId, GridRowModes, GridRowModesModel, GridToolbarContainer, GridAddIcon, GridActionsCellItem, GridSaveAltIcon, GridDeleteIcon } from '@mui/x-data-grid';
 import { Alert, Box, Button, CircularProgress } from "@mui/material";
 import axios from "axios";
-
-const headers: GridColDef[] = [
-    { field: 'itemno', headerName: 'Item No.', width: 150 },
-    { field: 'description', editable: true, headerName: 'Description', width: 150 },
-    { field: 'unit', editable: true, headerName: 'Unit', width: 150 },
-    { field: 'qty', editable: true, headerName: 'Qty', width: 150 },
-    { field: 'rate', editable: true, headerName: 'Rate', width: 150 },
-    { field: 'amount', editable: true, headerName: 'Amount', width: 120 }
-]
-
 
 const Home = () => {
     const [rows, setRows] = useState<any[]>([]);
     const [editedRows, setEditedRows] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+
+    const headers: GridColDef[] = [
+        { field: 'itemno', headerName: 'Item No.', width: 150 },
+        { field: 'description', editable: true, headerName: 'Description', width: 150 },
+        { field: 'unit', editable: true, headerName: 'Unit', width: 150 },
+        { field: 'qty', editable: true, headerName: 'Qty', width: 150 },
+        { field: 'rate', editable: true, headerName: 'Rate', width: 150 },
+        { field: 'amount', editable: true, headerName: 'Amount', width: 120 },
+        {
+            field: 'actions',
+            type: 'actions',
+            headerName: 'Actions',
+            width: 100,
+            cellClassName: 'actions',
+            getActions: ({ id }) => {
+              return [
+                
+                <GridActionsCellItem
+                  icon={<GridDeleteIcon />}
+                  label="Delete"
+                  onClick={handleDeleteClick(id)}
+                  color="inherit"
+                />
+              ];
+            }
+        }
+    ];
 
     const fetchData = async () => {
         setLoading(true);
@@ -88,8 +105,25 @@ const Home = () => {
         setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
     };
 
-    const handleDeleteClick = (id: GridRowId) => () => {
-        setRows(rows.filter((row) => row.id !== id));
+    const handleDeleteClick = (id: GridRowId) => async () => {
+        setLoading(true);
+        setError("");
+
+        await axios.delete(`http://localhost:7000/api/v1/tasklist/${id}`)
+        .then((res) => {
+            setLoading(false);
+
+            if(res.data.message && res.data.message === "delete success") {
+                setError("success-delete")
+            } else {
+                setError("delete task failed")
+            }
+        }).catch((err) => {
+            setLoading(false);
+            setError("something went wrong");
+        })
+
+        // setRows(rows.filter((row) => row.id !== id));
     };
 
     const handleCancelClick = (id: GridRowId) => () => {
@@ -127,10 +161,11 @@ const Home = () => {
                 {loading && <CircularProgress />}
                 {rows.length == 0 && !loading && <Alert severity="warning">No data found</Alert>}
                 {error === "success" && <Alert severity="success">update successful</Alert>}
-                {error !== "" && error !== "success" && <Alert severity="error">{error}</Alert>}
-                {/* {rows !== undefined && rows.length > 0 && <DataGrid onRowEditStart={handleRowEditStart} onRowEditStop={handleRowEditStop} processRowUpdate={(params) => updateData(params)} rows={rows} columns={headers} onProcessRowUpdateError={((error: Error) => { console.log(error) })} />} */}
+                {error === "success-delete" && <Alert severity="success">delete successful</Alert>}
+                {error !== "" && error !== "success" && error !== "success-delete" && <Alert severity="error">{error}</Alert>}
 
                 {rows !== undefined && rows.length > 0 && <DataGrid 
+                    style={{fontFamily: "Montserrat"}}
                     rowModesModel={rowModesModel}
                     onRowModesModelChange={handleRowModesModelChange}
                     onRowEditStart={handleRowEditStart}

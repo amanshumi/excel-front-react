@@ -118,7 +118,7 @@ const Upload = () => {
 
                 <input type="file" name="excel" onInput={handleChange} />
 
-                <button type="submit">upload</button>
+                <button className="button-form" type="submit">upload</button>
             </form>
             <div>
                 {rows !== undefined && rows.length > 0 && <DataGrid rows={rows} columns={headers} />}

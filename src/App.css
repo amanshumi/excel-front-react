@@ -59,7 +59,7 @@ h1, h2, h3, h4, p, span, a, li, input, button{
   width: 100%;
 }
 
-.upload-form button{
+.upload-form .button-form{
   background: #0099dd;
   flex-basis: 24%;
   padding: 20px;
